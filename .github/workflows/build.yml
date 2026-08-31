@@ -1,25 +1,41 @@
-name: build
+name: build and deploy
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-# Rebuilds public/ on every push so the deployed site always matches src/.
+# Builds public/ from src/ and publishes it to GitHub Pages, so the live site
+# always matches the source. Never edit public/ by hand.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - run: python3 build.py
-      - name: Commit rebuilt site
-        run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public
-          git diff --staged --quiet || git commit -m "build: refresh public/"
-          git push
+      - run: touch public/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

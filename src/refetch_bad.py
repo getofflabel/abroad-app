@@ -7,7 +7,7 @@ from PIL import Image
 
 P = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(P, 'city_src')
-UA = {'User-Agent': 'AbroadApp/1.0 (wallacechen23@gmail.com)'}
+UA = {'User-Agent': 'AbroadApp/1.0 (+https://github.com/getofflabel/abroad-app)'}
 
 BAD = re.compile(r'flag|map|locator|coat[_ ]of[_ ]arms|montage|collage|seal|'
                  r'emblem|banner|logo|\.svg|location|orthographic|globe|'

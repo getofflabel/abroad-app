@@ -2,6 +2,8 @@
 
 Weekend trips with people from your study-abroad program.
 
+Live: **https://getofflabel.github.io/abroad-app/**
+
 ## What deploys
 
 | URL | What it is |

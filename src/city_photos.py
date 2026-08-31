@@ -12,7 +12,7 @@ from PIL import Image, ImageEnhance
 P = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(P, 'city_src')
 GRADED = os.path.join(P, 'city_graded')
-UA = {'User-Agent': 'AbroadApp/1.0 (wallacechen23@gmail.com)'}
+UA = {'User-Agent': 'AbroadApp/1.0 (+https://github.com/getofflabel/abroad-app)'}
 
 # Wikipedia article titles where the bare city name is ambiguous or wrong.
 TITLE = {
