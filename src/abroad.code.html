@@ -358,11 +358,14 @@
   .splash{position:absolute;inset:0;z-index:60;pointer-events:none;background:#08090B;
     display:flex;align-items:center;justify-content:center;overflow:hidden;}
   .splash.done{display:none;}
-  /* Sized so the bloom plus its blur still clears the screen edge at peak scale
-     (it grows to 1.25x), otherwise the container crops it into a straight line. */
-  .splash-bloom{position:absolute;width:min(60%,38vh);aspect-ratio:1;border-radius:50%;opacity:0;
-    background:radial-gradient(circle at 50% 50%, rgba(255,216,152,.92) 0%, rgba(255,142,116,.74) 20%, rgba(226,88,180,.5) 40%, rgba(122,92,240,.26) 56%, rgba(122,92,240,.08) 70%, rgba(122,92,240,0) 84%);
-    filter:blur(22px);}
+  /* No filter:blur() here. WebKit clips a blur to a rectangle just larger than
+     the element, so any blur spilling past it gets sliced flat -- that hard edge
+     was the "box". A radial gradient is already smooth, so the glow can be huge
+     and still fade to nothing on its own. */
+  .splash-bloom{position:absolute;width:min(165%,115vh);aspect-ratio:1;border-radius:50%;opacity:0;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(255,232,190,.98) 0%, rgba(255,206,158,.86) 5%, rgba(255,150,120,.62) 11%, rgba(240,110,180,.42) 18%, rgba(178,100,236,.26) 26%, rgba(130,96,240,.14) 33%, rgba(122,92,240,.06) 39%, rgba(122,92,240,.016) 43%, rgba(122,92,240,0) 46%);
+    mix-blend-mode:screen;}
   .splash-mark{position:relative;width:190px;height:190px;opacity:0;}
   
   @media (prefers-reduced-motion:reduce){ .splash{display:none;} }
