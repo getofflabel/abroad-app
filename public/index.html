@@ -1,11 +1,11 @@
 <title>Abroad Demo</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Weekend trips with people from your study-abroad program. Verified students only.">
-<meta name="theme-color" content="#0A0B0D">
+<meta name="description" content="Travel with students studying abroad, from any school. Verified students only.">
+<meta name="theme-color" content="#FFFFFF">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Abroad">
-<meta property="og:description" content="Weekend trips with people from your study-abroad program. Verified students only.">
+<meta property="og:description" content="Travel with students studying abroad, from any school. Verified students only.">
 <meta property="og:image" content="https://getofflabel.github.io/abroad-app/share_card.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="apple-touch-icon" sizes="180x180" href="https://getofflabel.github.io/abroad-app/icons/icon-180.png">
@@ -375,9 +375,11 @@ window.ABROAD_DEMO = {"me":"028b423e-0a82-444a-886d-e2ac52d675a6","abroad_profil
   .splash{position:absolute;inset:0;z-index:60;pointer-events:none;background:#08090B;
     display:flex;align-items:center;justify-content:center;overflow:hidden;}
   .splash.done{display:none;}
-  .splash-bloom{position:absolute;width:78%;aspect-ratio:1;border-radius:50%;opacity:0;
-    background:radial-gradient(circle at 50% 50%, rgba(255,216,152,.92) 0%, rgba(255,142,116,.74) 22%, rgba(226,88,180,.52) 44%, rgba(122,92,240,.3) 60%, rgba(122,92,240,0) 74%);
-    filter:blur(26px);}
+  /* Sized so the bloom plus its blur still clears the screen edge at peak scale
+     (it grows to 1.25x), otherwise the container crops it into a straight line. */
+  .splash-bloom{position:absolute;width:min(60%,38vh);aspect-ratio:1;border-radius:50%;opacity:0;
+    background:radial-gradient(circle at 50% 50%, rgba(255,216,152,.92) 0%, rgba(255,142,116,.74) 20%, rgba(226,88,180,.5) 40%, rgba(122,92,240,.26) 56%, rgba(122,92,240,.08) 70%, rgba(122,92,240,0) 84%);
+    filter:blur(22px);}
   .splash-mark{position:relative;width:190px;height:190px;opacity:0;}
   
   @media (prefers-reduced-motion:reduce){ .splash{display:none;} }
@@ -1662,7 +1664,7 @@ window.ABROAD_DEMO = {"me":"028b423e-0a82-444a-886d-e2ac52d675a6","abroad_profil
         '<div class="hero-scrim"></div>'+
         '<div class="welcome-content">'+
           '<div class="lockup"><img class="brand-mark" src="'+MARK_SM+'" alt=""><div class="wordmark">Abroad</div></div>'+
-          '<div class="welcome-tag">Weekend trips with people from your program.</div>'+
+          '<div class="welcome-tag">Find students to travel with.</div>'+
           '<div class="welcome-pill">Verified students only.</div>'+
           '<div class="welcome-btn-wrap"><button class="btn btn-primary" onclick="go(\'verify\')">Continue with student email</button></div>'+
         '</div>'+
@@ -2031,7 +2033,7 @@ window.ABROAD_DEMO = {"me":"028b423e-0a82-444a-886d-e2ac52d675a6","abroad_profil
     }).join('');
     var tripsSection = upcoming.length ? tripCards :
       '<div class="hpad"><div class="card" style="padding:18px;"><div class="going-sub" style="font-size:13px;color:var(--ink);">Nobody has posted a trip yet.</div>'+
-      '<div class="helper" style="margin-top:6px;">Pick a weekend and a city, and other students can ask to come.</div>'+
+      '<div class="helper" style="margin-top:6px;">Pick a city and dates, and other students can ask to come.</div>'+
       '<div style="margin-top:12px;"><button class="btn btn-ghost" onclick="openAddChoice()">Host the first one</button></div></div></div>';
     var popularCities = CITIES.filter(function(c){ return c.p===1; }).slice(0,10);
     var popTiles = popularCities.map(function(c){
@@ -3007,7 +3009,7 @@ window.ABROAD_DEMO = {"me":"028b423e-0a82-444a-886d-e2ac52d675a6","abroad_profil
     return '<div class="sheet-head"><div class="sheet-title fr">Host a trip</div><button class="sheet-close" onclick="closeSheet()">'+ICONS.close+'</button></div>'+
       '<div class="sheet-section"><div class="eyebrow" style="margin-bottom:8px;">Where</div>'+hostCitySectionHTML()+'</div>'+
       '<div class="sheet-section"><div class="eyebrow" style="margin-bottom:8px;">Name it</div>'+
-        '<input class="input" id="hostTitleInput" placeholder="'+escapeAttr(sheetSel.citySlug ? ('Weekend in '+cityLabel) : 'Give your trip a name')+'" value="'+escapeAttr(sheetSel.title)+'" oninput="onHostTitle(this.value)" /></div>'+
+        '<input class="input" id="hostTitleInput" placeholder="'+escapeAttr(sheetSel.citySlug ? ('Trip to '+cityLabel) : 'Give your trip a name')+'" value="'+escapeAttr(sheetSel.title)+'" oninput="onHostTitle(this.value)" /></div>'+
       '<div class="sheet-section"><div class="eyebrow" style="margin-bottom:8px;">When</div><div class="chip-row">'+whenChips+'</div></div>'+
       '<div class="sheet-section"><div class="eyebrow" style="margin-bottom:8px;">Spots</div><div class="chip-row">'+spotChips+'</div></div>'+
       '<div class="sheet-section"><div class="eyebrow" style="margin-bottom:8px;">Cover photo</div>'+hostCoverHTML(cityLabel)+'</div>'+
@@ -3050,7 +3052,7 @@ window.ABROAD_DEMO = {"me":"028b423e-0a82-444a-886d-e2ac52d675a6","abroad_profil
       city_slug: sheetSel.citySlug,
       city_name: c ? c.n : cityName(sheetSel.citySlug),
       country: c ? c.c : cityCountry(sheetSel.citySlug),
-      title: sheetSel.title.trim() || ('Weekend in ' + cityName(sheetSel.citySlug)),
+      title: sheetSel.title.trim() || ('Trip to ' + cityName(sheetSel.citySlug)),
       starts_on: w.startISO,
       ends_on: w.endISO,
       capacity: sheetSel.spots,

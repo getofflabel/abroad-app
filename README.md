@@ -1,6 +1,6 @@
 # Abroad
 
-Weekend trips with people from your study-abroad program.
+Travel with students studying abroad, from any school.
 
 Live: **https://getofflabel.github.io/abroad-app/**
 
