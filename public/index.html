@@ -176,6 +176,41 @@ window.ABROAD_DEMO = {"me":"028b423e-0a82-444a-886d-e2ac52d675a6","abroad_profil
   .featured-tag{font-weight:400;font-size:14px;line-height:1.3;color:rgba(255,255,255,.72);margin-top:3px;}
   .featured-meta{font-size:12.5px;color:rgba(255,255,255,.88);margin-top:8px;}
 
+  /* Luma-style row: small thumbnail left, everything else right. Fits four to a
+     screen where a full-width photo card fit one and a half. */
+  .ev-group{padding:0 20px;}
+  .ev-date{display:flex;align-items:baseline;gap:8px;padding:22px 0 6px;}
+  .ev-date b{font-size:17px;font-weight:600;letter-spacing:-.01em;}
+  .ev-date span{font-size:17px;color:var(--muted);}
+  .ev{display:grid;grid-template-columns:76px 1fr;gap:14px;padding:14px 0;cursor:pointer;
+    border-bottom:1px solid var(--line-soft);align-items:start;}
+  .ev:last-child{border-bottom:none;}
+  .ev-thumb{position:relative;width:76px;height:76px;border-radius:12px;overflow:hidden;
+    background-size:cover;background-position:center;border:1px solid var(--line);}
+  .ev-flag{position:absolute;left:5px;bottom:5px;font-size:10px;font-weight:700;letter-spacing:.02em;
+    padding:3px 7px;border-radius:6px;background:rgba(12,13,16,.78);color:#fff;}
+  .ev-flag.go{background:rgba(31,107,82,.92);}
+  .ev-body{display:flex;flex-direction:column;gap:3px;min-width:0;}
+  .ev-host{display:flex;align-items:center;gap:6px;font-size:13.5px;color:var(--muted);min-width:0;}
+  .ev-host .avatar{width:18px;height:18px;font-size:8px;}
+  .ev-host span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .ev-title{font-size:16.5px;font-weight:600;line-height:1.28;letter-spacing:-.01em;}
+  .ev-meta{display:flex;align-items:center;gap:14px;font-size:14px;color:var(--muted);margin-top:2px;
+    white-space:nowrap;overflow:hidden;}
+  .ev-meta i{display:inline-flex;align-items:center;gap:5px;font-style:normal;}
+  .ev-meta svg{width:14px;height:14px;opacity:.75;flex:none;}
+  .sec-link{display:flex;align-items:center;gap:5px;cursor:pointer;}
+  .sec-link svg{width:15px;height:15px;color:var(--muted);}
+  .chip-scroll{display:flex;gap:9px;overflow-x:auto;padding:0 20px 4px;scrollbar-width:none;}
+  .chip-scroll::-webkit-scrollbar{display:none;}
+  .chip-scroll .chip{white-space:nowrap;flex:none;}
+  .city-rail{display:flex;gap:12px;overflow-x:auto;padding:0 20px 4px;scrollbar-width:none;}
+  .city-rail::-webkit-scrollbar{display:none;}
+  .city-card{position:relative;flex:none;width:210px;height:150px;border-radius:14px;overflow:hidden;
+    cursor:pointer;background-size:cover;background-position:center;}
+  .city-card .cc-scrim{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,11,13,.72) 0%,rgba(10,11,13,.05) 55%);}
+  .city-card .cc-name{position:absolute;left:14px;bottom:11px;color:#fff;font-size:17px;font-weight:600;letter-spacing:-.01em;z-index:2;}
+  .city-card .cc-meta{position:absolute;left:14px;bottom:-2px;color:rgba(255,255,255,.8);font-size:12.5px;z-index:2;}
   .trip-card-h{margin:0 20px 12px;border-radius:16px;overflow:hidden;background:var(--card);border:1px solid var(--line);cursor:pointer;}
   .trip-photo{height:132px;position:relative;background-size:cover;background-position:center;}
   .trip-body{padding:14px 16px 16px;}
@@ -799,6 +834,9 @@ window.ABROAD_DEMO = {"me":"028b423e-0a82-444a-886d-e2ac52d675a6","abroad_profil
     connect: '<svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd"><path d="M9 3.6a3.4 3.4 0 1 0 0 6.8 3.4 3.4 0 0 0 0-6.8Zm8 1.6a2.9 2.9 0 1 0 0 5.8 2.9 2.9 0 0 0 0-5.8ZM9 12.1c-3.5 0-6.3 2.6-6.3 6.3 0 .9.7 1.6 1.6 1.6h9.4c.9 0 1.6-.7 1.6-1.6 0-3.7-2.8-6.3-6.3-6.3Zm7.8.5c-.5 0-1 .05-1.45.16 1.2 1.5 1.87 3.45 1.87 5.64 0 .58-.14 1.13-.4 1.6h4.06c.84 0 1.52-.68 1.52-1.52 0-3.36-2.4-5.88-5.6-5.88Z"/></svg>',
     me: '<svg viewBox="0 0 24 24" fill="currentColor" fill-rule="evenodd"><path d="M12 3.2a4.3 4.3 0 1 0 0 8.6 4.3 4.3 0 0 0 0-8.6Zm0 10.3c-4.36 0-7.9 2.85-7.9 6.36 0 .63.51 1.14 1.14 1.14h13.52c.63 0 1.14-.51 1.14-1.14 0-3.51-3.54-6.36-7.9-6.36Z"/></svg>',
     plus: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 5 L12 19 M5 12 L19 12" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>',
+    clock: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.2V12l3.2 1.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    pin: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="1.8"/></svg>',
+    people: '<svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 19.5c0-3.2 2.5-5.5 5.5-5.5s5.5 2.3 5.5 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16 5.6a2.8 2.8 0 0 1 0 5.6M17 14.2c2.4 0 4 1.9 4 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
     camera: '<svg viewBox="0 0 24 24" fill="none"><path d="M4 8.5 A1.5 1.5 0 0 1 5.5 7 H8 L9.3 5 H14.7 L16 7 H18.5 A1.5 1.5 0 0 1 20 8.5 V17.5 A1.5 1.5 0 0 1 18.5 19 H5.5 A1.5 1.5 0 0 1 4 17.5 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.2" stroke="currentColor" stroke-width="1.7"/></svg>',
     bell: '<svg viewBox="0 0 24 24" fill="none"><path d="M6 10 C6 6 8 4 12 4 C16 4 18 6 18 10 C18 13 19 15 20 16 L4 16 C5 15 6 13 6 10 Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M10 19 C10 20 11 21 12 21 C13 21 14 20 14 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
     bellLarge: '<svg viewBox="0 0 24 24" fill="none"><path d="M6 10 C6 6 8 4 12 4 C16 4 18 6 18 10 C18 13 19 15 20 16 L4 16 C5 15 6 13 6 10 Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 19 C10 20 11 21 12 21 C13 21 14 20 14 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
@@ -2013,73 +2051,112 @@ window.ABROAD_DEMO = {"me":"028b423e-0a82-444a-886d-e2ac52d675a6","abroad_profil
   window.openPhotoSheet = openPhotoSheet; window.removePhotoSlot = removePhotoSlot;
   window.onboardContinue = onboardContinue; window.onboardBack = onboardBack;
 
+  /* ---------------- trip rows (Luma-style) ---------------- */
+  function tripRowHTML(t, flag){
+    var host = PROFILES[t.hostId] || PROFILES[t.squadIds[0]];
+    var hostName = host ? host.name : 'A student';
+    var school = host && host.school;
+    /* Luma keeps the meta line to time and place so it never wraps; the urgent
+       bit (nearly full) goes on the thumbnail where it reads at a glance. */
+    var openSeats = Math.max(0, (t.capacity||0) - t.squadIds.length);
+    var badge = flag || (openSeats > 0 && openSeats <= 2 ? openSeats+' left' : '');
+    return '<div class="ev" onclick="go(\'trip\',{id:\''+t.id+'\'})">'+
+      '<div class="ev-thumb" style="'+tripStyle(t)+'">'+
+        (badge ? '<span class="ev-flag'+(flag?' go':'')+'">'+escapeHTML(badge)+'</span>' : '')+
+      '</div>'+
+      '<div class="ev-body">'+
+        '<div class="ev-host">'+avatarHTML(host?host.id:null,18)+
+          '<span>'+escapeHTML([hostName, school].filter(Boolean).join(' · '))+'</span></div>'+
+        '<div class="ev-title">'+escapeHTML(t.title)+'</div>'+
+        '<div class="ev-meta">'+
+          '<i>'+ICONS.clock+escapeHTML(t.dates)+'</i>'+
+          '<i>'+ICONS.pin+escapeHTML(t.cityName || cityName(t.citySlug))+'</i>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }
+  /* Luma heads each day with the date, then the weekday in grey. */
+  function dateHeadingHTML(iso){
+    var d = new Date(iso + 'T12:00:00');
+    var today = new Date(); today.setHours(12,0,0,0);
+    var days = Math.round((d - today) / 86400000);
+    var wk = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][d.getDay()];
+    var mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
+    var label = days===0 ? 'Today' : (days===1 ? 'Tomorrow' : mo+' '+d.getDate());
+    return '<div class="ev-date"><b>'+label+'</b><span>/ '+wk+'</span></div>';
+  }
+  function groupedTripsHTML(trips){
+    if(!trips.length) return '';
+    var out = '', lastDay = null;
+    trips.forEach(function(t){
+      if(t.startsOn !== lastDay){ out += dateHeadingHTML(t.startsOn); lastDay = t.startsOn; }
+      out += tripRowHTML(t);
+    });
+    return '<div class="ev-group">'+out+'</div>';
+  }
+
   /* ---------------- Home ---------------- */
   var HOME_LOADED = false;
   function renderHome(){
     var el = document.getElementById('screen-home');
-    var s = DESTINATIONS.santorini;
-    var featuredStats = cityStatsText('santorini');
     var todayISO = isoDate(new Date());
-    var upcoming = TRIPS.filter(function(t){ return t.startsOn >= todayISO; }).slice(0,6);
-    var tripCards = upcoming.map(function(t){
-      var host = PROFILES[t.squadIds[0]];
-      var hostBits = [host ? host.name : 'A student', host && host.school].filter(Boolean).join(' · ');
-      return '<div class="trip-card-h" onclick="go(\'trip\',{id:\''+t.id+'\'})">'+
-        '<div class="trip-photo" style="'+tripStyle(t)+'"></div>'+
-        '<div class="trip-body">'+
-          '<div class="trip-when">'+escapeHTML(t.dates)+'</div>'+
-          '<div class="trip-title">'+escapeHTML(t.title)+'</div>'+
-          '<div class="trip-host-row">'+avatarHTML(t.squadIds[0],22)+'<span class="trip-host-text">Hosted by '+escapeHTML(hostBits)+'</span></div>'+
-          '<div class="trip-bottom-row">'+avatarsRow(t.squadIds,26)+'<span class="spots-left">'+spotsLeftText(t)+'</span></div>'+
+    var upcoming = TRIPS.filter(function(t){ return t.startsOn >= todayISO; });
+
+    /* Your own trips lead, the way Luma opens with Your Events. */
+    var mine = upcoming.filter(function(t){ return t.squadIds.indexOf(AUTH_UID)!==-1; });
+    var rest = upcoming.filter(function(t){ return t.squadIds.indexOf(AUTH_UID)===-1; });
+
+    var yourSection = '';
+    if(mine.length){
+      yourSection =
+        '<div class="section"><div class="section-head">'+
+          '<div class="sec-link section-title" onclick="goRoot(\'me\')">Your trips'+ICONS.chevron+'</div>'+
         '</div>'+
+        '<div class="ev-group">'+mine.slice(0,4).map(function(t){
+          return tripRowHTML(t, t.hostId===AUTH_UID ? 'Hosting' : 'Going');
+        }).join('')+'</div></div>';
+    }
+
+    var openSection = rest.length
+      ? groupedTripsHTML(rest.slice(0,8))
+      : '<div class="hpad"><div class="card" style="padding:18px;">'+
+        '<div class="going-sub" style="font-size:14px;color:var(--ink);">No open trips yet.</div>'+
+        '<div class="helper" style="margin-top:6px;">Pick a city and dates, and other students can ask to come.</div>'+
+        '<div style="margin-top:12px;"><button class="btn btn-ghost" onclick="openAddChoice()">Host the first one</button></div></div></div>';
+
+    var popularCities = CITIES.filter(function(c){ return c.p===1; }).slice(0,12);
+    var cityRail = popularCities.map(function(c){
+      var slug = citySlug(c.n), stats = cityStatsText(slug);
+      return '<div class="city-card" onclick="go(\'destination\',\''+slug+'\')" style="'+cityStyle(slug)+'">'+
+        '<div class="cc-scrim"></div><div class="cc-name">'+escapeHTML(c.n)+'</div>'+
+        (stats ? '<div class="cc-meta" style="bottom:-2px;"></div>' : '')+
       '</div>';
     }).join('');
-    var tripsSection = upcoming.length ? tripCards :
-      '<div class="hpad"><div class="card" style="padding:18px;"><div class="going-sub" style="font-size:13px;color:var(--ink);">Nobody has posted a trip yet.</div>'+
-      '<div class="helper" style="margin-top:6px;">Pick a city and dates, and other students can ask to come.</div>'+
-      '<div style="margin-top:12px;"><button class="btn btn-ghost" onclick="openAddChoice()">Host the first one</button></div></div></div>';
-    var popularCities = CITIES.filter(function(c){ return c.p===1; }).slice(0,10);
-    var popTiles = popularCities.map(function(c){
-      var slug = citySlug(c.n);
-      return '<div class="pop-tile" onclick="go(\'destination\',\''+slug+'\')">'+
-        '<div class="pt-photo" style="'+cityStyle(slug)+'"></div>'+
-        '<div class="pt-name">'+c.n+'</div>'+
-      '</div>';
-    }).join('');
+
     var recentPosts = POSTS.slice(0,3);
-    var postCards = recentPosts.map(function(p){ return postCardHTML(p,false); }).join('');
-    var postsSection = recentPosts.length ?
-      '<div class="section"><div class="section-head"><div class="section-title">From students</div></div>'+postCards+'</div>' : '';
+    var postsSection = recentPosts.length
+      ? '<div class="section"><div class="section-head"><div class="section-title">From students</div></div>'+
+        recentPosts.map(function(p){ return postCardHTML(p,false); }).join('')+'</div>'
+      : '';
 
     el.innerHTML =
       '<div class="home-header">'+
-        '<div><div class="eyebrow">'+escapeHTML([PROFILE.city, todayWeekday()].filter(Boolean).join(', '))+'</div><div class="greeting">Hi, '+escapeHTML(PROFILE.firstName)+'</div></div>'+
+        '<div><div class="eyebrow">'+escapeHTML([PROFILE.city, todayWeekday()].filter(Boolean).join(', '))+'</div>'+
+        '<div class="greeting">Hi, '+escapeHTML(PROFILE.firstName)+'</div></div>'+
         '<div class="home-right">'+
           '<button class="hdr-btn" id="hostBtn" onclick="openAddChoice()" title="Add"></button>'+
           '<button class="hdr-btn" id="bellBtn" onclick="go(\'notif\')">'+(hasUnreadNotifs()?'<span class="bell-dot"></span>':'')+'</button>'+
         '</div>'+
       '</div>'+
-      '<div class="section" style="margin-top:22px;">'+
-        '<div class="section-head"><div class="section-title">Featured this week</div></div>'+
-        '<div class="featured-card" onclick="go(\'destination\',\'santorini\')" style="'+cityStyle('santorini')+'">'+
-          '<div class="featured-scrim"></div>'+
-          '<div class="featured-bottom">'+
-            '<div class="eyebrow">Greece</div>'+
-            '<div class="featured-name">Santorini</div>'+
-            '<div class="featured-tag">'+s.tagline+'</div>'+
-            (featuredStats ? '<div class="featured-meta">'+featuredStats+'</div>' : '')+
-          '</div>'+
-        '</div>'+
-      '</div>'+
-      '<div class="section">'+
-        '<div class="section-head"><div class="section-title">Trips you can join</div></div>'+
-        tripsSection+
+      yourSection+
+      '<div class="section"><div class="section-head"><div class="section-title">Trips you can join</div></div>'+
+        openSection+
       '</div>'+
       postsSection+
-      '<div class="section">'+
-        '<div class="section-head"><div class="section-title">Popular nearby</div></div>'+
-        '<div class="hscroll">'+popTiles+'</div>'+
-      '</div>';
+      '<div class="section"><div class="section-head">'+
+        '<div class="sec-link section-title" onclick="goRoot(\'explore\')">Cities'+ICONS.chevron+'</div>'+
+      '</div><div class="city-rail">'+cityRail+'</div></div>';
+
     el.querySelector('#hostBtn').innerHTML = ICONS.plus;
     el.querySelector('#bellBtn').innerHTML += ICONS.bell;
 
@@ -2186,16 +2263,39 @@ window.ABROAD_DEMO = {"me":"028b423e-0a82-444a-886d-e2ac52d675a6","abroad_profil
         cityResultsGridHTML(matches);
       return;
     }
+
+    /* Discover opens with what is actually happening, then ways to browse. */
+    var todayISO = isoDate(new Date());
+    var open = TRIPS.filter(function(t){
+      return t.startsOn >= todayISO && t.squadIds.indexOf(AUTH_UID)===-1;
+    }).slice(0,5);
+    var tripsBlock = open.length
+      ? '<div class="section-head"><div class="section-title">Trips coming up</div></div>'+
+        '<div class="ev-group">'+open.map(function(t){ return tripRowHTML(t); }).join('')+'</div>'
+      : '';
+
     var chips = REGION_CHIP_OPTIONS.map(function(v){
       return '<span class="chip'+(exploreRegion===v?' active':'')+'" onclick="setExploreRegion(\''+v+'\')">'+regionChipLabel(v)+'</span>';
     }).join('');
+
     var popular = CITIES.filter(function(c){ return c.p===1 && (exploreRegion==='All' || c.r===exploreRegion); });
+    var rail = popular.slice(0,14).map(function(c){
+      var slug = citySlug(c.n), stats = cityStatsText(slug);
+      return '<div class="city-card" onclick="go(\'destination\',\''+slug+'\')" style="'+cityStyle(slug)+'">'+
+        '<div class="cc-scrim"></div><div class="cc-name">'+escapeHTML(c.n)+'</div></div>';
+    }).join('');
+
     body.innerHTML =
-      '<div class="section-head"><div class="section-title">Popular with students</div></div>'+
-      cityResultsGridHTML(popular)+
-      '<div class="section" style="margin-top:8px;">'+
-        '<div class="section-head"><div class="section-title">Browse by region</div></div>'+
+      tripsBlock+
+      '<div class="section"><div class="section-head"><div class="section-title">Browse by region</div></div>'+
         '<div class="chip-scroll">'+chips+'</div>'+
+      '</div>'+
+      '<div class="section"><div class="section-head"><div class="section-title">Cities</div>'+
+        '<div class="section-sub">'+popular.length+'</div></div>'+
+        '<div class="city-rail">'+rail+'</div>'+
+      '</div>'+
+      '<div class="section"><div class="section-head"><div class="section-title">All cities</div></div>'+
+        cityResultsGridHTML(popular)+
       '</div>';
   }
   function setExploreRegion(v){ exploreRegion = v; renderExploreBody(); }
