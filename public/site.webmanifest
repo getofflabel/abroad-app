@@ -1,0 +1,16 @@
+{
+  "name": "Abroad",
+  "short_name": "Abroad",
+  "description": "Weekend trips with people from your study-abroad program.",
+  "start_url": "/abroad-app/",
+  "scope": "/abroad-app/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0A0B0D",
+  "theme_color": "#0A0B0D",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

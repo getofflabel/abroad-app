@@ -26,6 +26,8 @@ def main():
     os.makedirs(os.path.join(OUT, 'app'))
 
     shutil.copy(os.path.join(ROOT, 'share_card.jpg'), os.path.join(OUT, 'share_card.jpg'))
+    shutil.copy(os.path.join(ROOT, 'site.webmanifest'), os.path.join(OUT, 'site.webmanifest'))
+    shutil.copytree(os.path.join(ROOT, 'icons'), os.path.join(OUT, 'icons'))
     shutil.copy(os.path.join(SRC, 'abroad.demo.html'), os.path.join(OUT, 'index.html'))
     shutil.copy(os.path.join(SRC, 'abroad.html'), os.path.join(OUT, 'app', 'index.html'))
 
