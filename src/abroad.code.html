@@ -25,10 +25,64 @@
     --coral:#15171B;
     --coral-tint:#EFF1F4;
     --line:#E3E6EA;
+    --line-soft:#EDEFF2;
+    --tint:#EFF1F4;
+    --tint-ink:#3C424B;
+    --bar:rgba(21,23,27,.90);
+    --bar-line:rgba(255,255,255,.10);
+    --bar-ink:#FFFFFF;
+    --bar-dim:rgba(255,255,255,.5);
+    --bar-pill:rgba(255,255,255,.13);
+    --spin:rgba(21,23,27,.25);
     --scrim:linear-gradient(180deg,transparent 26%,rgba(6,7,9,.78));
     --chrome-grad:linear-gradient(108deg,#F7F8FA 0%,#C6CBD6 22%,#FFFFFF 40%,#9CA3B2 55%,#E9E4F0 70%,#BAC7D2 84%,#EDEFF3 100%);
     --chrome-ink:linear-gradient(108deg,#9AA1AC 0%,#3C424B 20%,#C3C9D2 38%,#22262C 56%,#8E95A1 72%,#2E333A 88%,#A9B0BA 100%);
     --chrome-btn:#15171B;
+    --on-btn:#FFFFFF;
+  }
+  /* Dark is a designed set, not an inversion: the ground stays warm-neutral and
+     the floating bar lifts off it instead of sinking into it. */
+  :root[data-theme="dark"]{
+    --paper:#0E1013;
+    --card:#181B20;
+    --ink:#EDEFF2;
+    --muted:#9198A3;
+    --coral:#EDEFF2;
+    --coral-tint:#23272E;
+    --line:#282D34;
+    --line-soft:#1F232A;
+    --tint:#23272E;
+    --tint-ink:#C3C9D2;
+    --bar:rgba(38,43,51,.92);
+    --bar-line:rgba(255,255,255,.12);
+    --bar-ink:#FFFFFF;
+    --bar-dim:rgba(255,255,255,.52);
+    --bar-pill:rgba(255,255,255,.16);
+    --spin:rgba(255,255,255,.28);
+    --chrome-btn:#EDEFF2;
+    --on-btn:#12141A;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#0E1013;
+      --card:#181B20;
+      --ink:#EDEFF2;
+      --muted:#9198A3;
+      --coral:#EDEFF2;
+      --coral-tint:#23272E;
+      --line:#282D34;
+      --line-soft:#1F232A;
+      --tint:#23272E;
+      --tint-ink:#C3C9D2;
+      --bar:rgba(38,43,51,.92);
+      --bar-line:rgba(255,255,255,.12);
+      --bar-ink:#FFFFFF;
+      --bar-dim:rgba(255,255,255,.52);
+      --bar-pill:rgba(255,255,255,.16);
+      --spin:rgba(255,255,255,.28);
+      --chrome-btn:#EDEFF2;
+      --on-btn:#12141A;
+    }
   }
   .chrome-text{background-image:var(--chrome-grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
   *{box-sizing:border-box;}
@@ -74,17 +128,17 @@
   .pill{display:inline-flex;align-items:center;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700;background:rgba(12,13,16,.62);color:#fff;border:1px solid rgba(255,255,255,.16);}
   .chip{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:999px;background:var(--card);
     border:1px solid var(--line);font-size:12.5px;font-weight:600;color:var(--ink);white-space:nowrap;}
-  .chip.active{background:var(--chrome-btn);color:#fff;border-color:transparent;}
+  .chip.active{background:var(--chrome-btn);color:var(--on-btn);border-color:transparent;}
   .chip-row{display:flex;flex-wrap:wrap;gap:8px;}
   .chip-scroll{display:flex;gap:8px;overflow-x:auto;padding:2px 20px 4px;scrollbar-width:none;}
   .chip-scroll::-webkit-scrollbar{display:none;}
 
   .btn{border:none;font-weight:600;font-size:15px;padding:15px 18px;cursor:pointer;
     width:100%;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:16px;}
-  .btn-primary{background:var(--chrome-btn);color:#fff;box-shadow:0 4px 14px rgba(21,23,27,.14);}
+  .btn-primary{background:var(--chrome-btn);color:var(--on-btn);box-shadow:0 4px 14px rgba(21,23,27,.14);}
   .btn-primary:disabled{opacity:.4;cursor:default;}
   .btn-ghost{background:var(--paper);color:var(--ink);border:1px solid var(--line);}
-  .btn-tint{background:#EFF1F4;color:#3C424B;border:1px solid var(--line);}
+  .btn-tint{background:var(--tint);color:var(--tint-ink);border:1px solid var(--line);}
   .btn-sm{width:auto;padding:10px 18px;font-size:13px;border-radius:999px;}
 
   .card{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:0 1px 3px rgba(21,23,27,.05);}
@@ -95,7 +149,7 @@
   .input:focus{border-color:#6E747E;}
   .helper{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.5;}
   .error-text{display:none;color:#C0392B;font-size:13px;margin-top:8px;font-weight:600;}
-  .spinner{width:15px;height:15px;border-radius:50%;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;animation:spin .7s linear infinite;}
+  .spinner{width:15px;height:15px;border-radius:50%;border:2px solid rgba(128,128,128,.35);border-top-color:currentColor;animation:spin .7s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
 
   .avatar{border-radius:50%;flex:none;background-size:cover;background-position:center;display:flex;align-items:center;
@@ -103,7 +157,7 @@
   .avatar-row{display:flex;}
   .avatar-row .avatar{margin-left:-10px;border:2px solid var(--card);}
   .avatar-row .avatar:first-child{margin-left:0;}
-  .verified{display:inline-flex;align-items:center;gap:4px;background:#EFF1F4;color:#15171B;border:1px solid var(--line);
+  .verified{display:inline-flex;align-items:center;gap:4px;background:var(--tint);color:var(--ink);border:1px solid var(--line);
     font-size:11.5px;font-weight:700;padding:4px 10px 4px 6px;border-radius:999px;}
   .verified svg{width:13px;height:13px;}
 
@@ -113,23 +167,23 @@
   .phone.full-bleed-top .status-shield{display:none;}
   .tabbar{position:absolute;z-index:8;left:14px;right:14px;bottom:max(10px, calc(env(safe-area-inset-bottom,0) - 16px));
     display:flex;gap:2px;padding:5px 6px;border-radius:999px;
-    background:rgba(21,23,27,.90);-webkit-backdrop-filter:blur(26px) saturate(180%);backdrop-filter:blur(26px) saturate(180%);
-    border:1px solid rgba(255,255,255,.10);
+    background:var(--bar);-webkit-backdrop-filter:blur(26px) saturate(180%);backdrop-filter:blur(26px) saturate(180%);
+    border:1px solid var(--bar-line);
     box-shadow:0 12px 34px rgba(12,14,18,.28),0 2px 8px rgba(12,14,18,.16);}
   /* One pill slides between tabs rather than fading in behind each one. */
   .tab-pill{position:absolute;top:5px;bottom:5px;left:0;width:0;border-radius:999px;
-    background:rgba(255,255,255,.13);pointer-events:none;opacity:0;
+    background:var(--bar-pill);pointer-events:none;opacity:0;
     transition:transform .42s cubic-bezier(.32,1.5,.52,1),
                width .42s cubic-bezier(.32,1.5,.52,1),
                opacity .2s ease;}
   .tab-pill.ready{opacity:1;}
   .tab{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
-    padding:6px 0 7px;background:none;border:none;cursor:pointer;color:rgba(255,255,255,.5);
+    padding:6px 0 7px;background:none;border:none;cursor:pointer;color:var(--bar-dim);
     transition:color .2s ease;-webkit-tap-highlight-color:transparent;}
   .tab .tab-icon{display:flex;align-items:center;justify-content:center;}
   .tab svg{width:22px;height:22px;display:block;}
   .tab span:not(.tab-icon){font-size:10.5px;font-weight:500;letter-spacing:0;}
-  .tab.active{color:#fff;}
+  .tab.active{color:var(--bar-ink);}
   .tab.active span:not(.tab-icon){font-weight:600;}
   .tab.active .tab-icon{animation:tabPop .4s cubic-bezier(.32,1.5,.52,1);}
   @keyframes tabPop{0%{transform:scale(.82)}55%{transform:scale(1.12)}100%{transform:scale(1)}}
@@ -351,7 +405,7 @@
   .empty-state h3,.deck-empty h3{font-weight:600;font-size:18px;line-height:1.2;color:var(--ink);margin-bottom:8px;}
   .req-btn-row{display:flex;gap:8px;margin-top:10px;}
   .req-btn-row .btn{width:auto;flex:1;}
-  .empty-cta{display:inline-block;margin-top:16px;background:var(--chrome-btn);color:#fff;border:none;
+  .empty-cta{display:inline-block;margin-top:16px;background:var(--chrome-btn);color:var(--on-btn);border:none;
     padding:12px 22px;border-radius:999px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;}
   .link-btn{background:none;border:none;padding:0 0 0 6px;color:var(--ink);font:inherit;
     font-weight:600;text-decoration:underline;cursor:pointer;}
@@ -454,23 +508,42 @@
   .inbox-row.unread .inbox-preview{color:var(--ink);font-weight:700;}
   #screen-thread.active{display:flex;flex-direction:column;padding-bottom:0;overflow:hidden;}
   #screen-thread.active{display:flex;flex-direction:column;padding-bottom:0;}
-  .thread-topbar{align-items:center;gap:10px;flex:none;position:sticky;top:0;z-index:5;background:var(--paper);}
-  .thread-head{display:flex;align-items:center;gap:10px;cursor:pointer;flex:1;min-width:0;}
-  .thread-name-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
-  .thread-name{font-weight:700;font-size:15px;}
-  .thread-context{text-align:center;font-size:12px;color:var(--muted);padding:4px 20px 10px;flex:none;}
-  .thread-msgs{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px 16px;}
-  .msg-row{display:flex;margin:6px 0;}
+  /* Luma's thread: the back button floats, the person is centred, and the
+     composer keeps its controls in pills. Nothing sticks to the status bar. */
+  .thread-top{position:relative;flex:none;display:flex;flex-direction:column;align-items:center;
+    gap:8px;padding:10px 20px 14px;background:var(--paper);}
+  .thread-back{position:absolute;left:16px;top:8px;width:38px;height:38px;border-radius:50%;
+    border:none;background:var(--tint);color:var(--ink);display:flex;align-items:center;
+    justify-content:center;cursor:pointer;z-index:2;}
+  .thread-back svg{width:19px;height:19px;}
+  .thread-who{display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;}
+  .thread-who .avatar{width:54px;height:54px;font-size:18px;}
+  .thread-pill{display:inline-flex;align-items:center;gap:5px;background:var(--tint);
+    border-radius:999px;padding:7px 14px;font-size:15px;font-weight:600;color:var(--ink);}
+  .thread-pill svg{width:14px;height:14px;color:var(--muted);}
+  .thread-context{text-align:center;font-size:13px;color:var(--muted);padding:0 20px 8px;flex:none;}
+  .thread-msgs{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;
+    padding:6px 16px 10px;display:flex;flex-direction:column;justify-content:flex-end;}
+  .msg-stamp{text-align:center;font-size:12.5px;color:var(--muted);margin:16px 0 8px;}
+  .msg-row{display:flex;margin:3px 0;}
   .msg-row.bubble-theirs{justify-content:flex-start;}
   .msg-row.bubble-mine{justify-content:flex-end;}
-  .msg-bubble{max-width:75%;padding:11px 15px;border-radius:18px;font-size:14px;line-height:1.4;overflow-wrap:anywhere;}
-  .bubble-theirs .msg-bubble{background:#F1F3F6;color:var(--ink);border-bottom-left-radius:6px;}
-  .bubble-mine .msg-bubble{background:var(--chrome-btn);color:#fff;border-bottom-right-radius:6px;}
-  .composer{display:flex;align-items:center;gap:10px;max-width:100%;padding:12px 16px calc(12px + env(safe-area-inset-bottom,0));border-top:1px solid var(--line);background:var(--card);flex:none;}
-  .composer-input{flex:1;min-width:0;width:auto;border-radius:999px;padding:12px 16px;}
-  .send-btn{width:40px;height:40px;border-radius:50%;border:none;background:var(--chrome-btn);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 4px 10px rgba(21,23,27,.2);}
+  .msg-bubble{max-width:76%;padding:11px 15px;border-radius:20px;font-size:15px;line-height:1.38;overflow-wrap:anywhere;}
+  .bubble-theirs .msg-bubble{background:var(--tint);color:var(--ink);border-bottom-left-radius:7px;}
+  .bubble-mine .msg-bubble{background:var(--chrome-btn);color:var(--on-btn);border-bottom-right-radius:7px;}
+  .msg-seen{text-align:right;font-size:12.5px;color:var(--muted);margin:4px 2px 0;}
+  .composer{display:flex;align-items:center;gap:9px;max-width:100%;
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom,0));
+    border-top:1px solid var(--line);background:var(--paper);flex:none;}
+  .composer-tools{display:flex;gap:2px;background:var(--tint);border-radius:999px;padding:4px;flex:none;}
+  .composer-tool{width:34px;height:34px;border-radius:50%;border:none;background:none;color:var(--muted);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .composer-tool svg{width:18px;height:18px;}
+  .composer-input{flex:1;min-width:0;width:auto;border-radius:999px;padding:11px 16px;background:var(--tint);border-color:transparent;}
+  .send-btn{width:38px;height:38px;border-radius:50%;border:none;background:var(--chrome-btn);color:var(--on-btn);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;transition:opacity .2s ease;}
   .send-btn svg{width:17px;height:17px;}
-  .send-btn:disabled{opacity:.35;cursor:default;}
+  .send-btn:disabled{opacity:.3;cursor:default;}
 
   /* ---- notifications ---- */
   .notif-row{display:flex;align-items:center;gap:12px;padding:14px 20px;cursor:pointer;background:var(--card);}
@@ -592,6 +665,40 @@
   var REAL_AUTH = !!(SUPABASE_URL && SUPABASE_KEY);
 
   /* ---------------- session ---------------- */
+  /* ---------------- appearance ---------------- */
+  var THEME_KEY = 'abroad_theme';
+  function currentTheme(){
+    try{ return localStorage.getItem(THEME_KEY) || 'system'; }catch(e){ return 'system'; }
+  }
+  function resolvedTheme(){
+    var t = currentTheme();
+    if(t === 'system'){
+      return (window.matchMedia && window.matchMedia('(prefers-color-scheme:dark)').matches) ? 'dark' : 'light';
+    }
+    return t;
+  }
+  function applyTheme(){
+    var t = currentTheme();
+    var root = document.documentElement;
+    if(t === 'system') root.removeAttribute('data-theme');
+    else root.setAttribute('data-theme', t);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if(meta) meta.setAttribute('content', resolvedTheme() === 'dark' ? '#0E1013' : '#FFFFFF');
+  }
+  function setTheme(t){
+    try{ localStorage.setItem(THEME_KEY, t); }catch(e){}
+    applyTheme();
+    if(current.screen === 'edit') renderEdit();
+  }
+  window.setTheme = setTheme;
+  applyTheme();
+  if(window.matchMedia){
+    var mq = window.matchMedia('(prefers-color-scheme:dark)');
+    var onSys = function(){ if(currentTheme()==='system') applyTheme(); };
+    if(mq.addEventListener) mq.addEventListener('change', onSys);
+    else if(mq.addListener) mq.addListener(onSys);
+  }
+
   var SESSION_KEY = 'abroad_session';
   var SESSION = null;
   var AUTH_UID = null;
@@ -772,6 +879,7 @@
     clock: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7.2V12l3.2 1.9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     pin: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="1.8"/></svg>',
     people: '<svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 19.5c0-3.2 2.5-5.5 5.5-5.5s5.5 2.3 5.5 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16 5.6a2.8 2.8 0 0 1 0 5.6M17 14.2c2.4 0 4 1.9 4 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+    arrowUp: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 19V6M6.5 11.5 12 6l5.5 5.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     camera: '<svg viewBox="0 0 24 24" fill="none"><path d="M4 8.5 A1.5 1.5 0 0 1 5.5 7 H8 L9.3 5 H14.7 L16 7 H18.5 A1.5 1.5 0 0 1 20 8.5 V17.5 A1.5 1.5 0 0 1 18.5 19 H5.5 A1.5 1.5 0 0 1 4 17.5 Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.2" stroke="currentColor" stroke-width="1.7"/></svg>',
     bell: '<svg viewBox="0 0 24 24" fill="none"><path d="M6 10 C6 6 8 4 12 4 C16 4 18 6 18 10 C18 13 19 15 20 16 L4 16 C5 15 6 13 6 10 Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M10 19 C10 20 11 21 12 21 C13 21 14 20 14 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
     bellLarge: '<svg viewBox="0 0 24 24" fill="none"><path d="M6 10 C6 6 8 4 12 4 C16 4 18 6 18 10 C18 13 19 15 20 16 L4 16 C5 15 6 13 6 10 Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M10 19 C10 20 11 21 12 21 C13 21 14 20 14 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>',
@@ -1816,7 +1924,7 @@
   function photoSlotsHTML(){
     return PROFILE.photos.map(function(key,i){
       if(PROFILE.photoBusy === i){
-        return '<div class="photo-slot empty"><span class="spinner" style="border-color:rgba(21,23,27,.25);border-top-color:#15171B;"></span></div>';
+        return '<div class="photo-slot empty"><span class="spinner" style="border-color:var(--spin);border-top-color:var(--ink);"></span></div>';
       }
       if(key){
         return '<div class="photo-slot filled" style="'+bgStyle(key, null)+'" onclick="removePhotoSlot('+i+')"></div>';
@@ -2776,6 +2884,12 @@
         '<input class="input" id="editSchool" value="'+escapeAttr(PROFILE.school)+'" oninput="onEditSchool(this.value)" />'+
         '<div class="eyebrow" style="margin-top:18px;margin-bottom:8px;">City</div><div class="chip-row">'+cityChips+'</div>'+
         '<div class="eyebrow" style="margin-top:18px;margin-bottom:8px;">Term</div><div class="chip-row">'+termChips+'</div>'+
+        '<div class="eyebrow" style="margin-top:18px;margin-bottom:8px;">Appearance</div><div class="chip-row">'+
+          ['system','light','dark'].map(function(t){
+            var label = t==='system' ? 'System' : (t==='light' ? 'Light' : 'Dark');
+            return '<span class="chip'+(currentTheme()===t?' active':'')+'" onclick="setTheme(\''+t+'\')">'+label+'</span>';
+          }).join('')+'</div>'+
+        '<div class="helper" style="margin-top:8px;">System follows your phone\u2019s setting.</div>'+
         '<div class="eyebrow" style="margin-top:18px;margin-bottom:8px;">About you</div>'+
         '<textarea class="sheet-textarea input" id="editQuote" oninput="onEditQuote(this.value)">'+escapeHTML(PROFILE.quote||'')+'</textarea>'+
         '<div style="margin-top:22px;"><button class="btn btn-primary" id="editSaveBtn" onclick="saveEdit()">Save changes</button></div>'+
@@ -2892,12 +3006,28 @@
     go('thread',{id:sid});
   }
   window.openThread = openThread;
+  function msgStamp(ts){
+    var d = new Date(ts), now = new Date();
+    var wk = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()];
+    var mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
+    var h = d.getHours(), ap = h>=12 ? 'PM' : 'AM';
+    var hh = h%12 || 12, mm = ('0'+d.getMinutes()).slice(-2);
+    var sameDay = d.toDateString() === now.toDateString();
+    return (sameDay ? 'Today' : wk+', '+mo+' '+d.getDate()) + ' at ' + hh + ':' + mm + ' ' + ap;
+  }
   function threadBubblesHTML(sid){
     var c = CONVERSATIONS[sid];
-    return c.messages.map(function(m){
+    var out = '', lastDay = null, msgs = c.messages;
+    msgs.forEach(function(m, i){
+      var t = m.time || Date.now();
+      var day = new Date(t).toDateString();
+      /* Luma centres the time above a run of messages rather than per bubble */
+      if(day !== lastDay){ out += '<div class="msg-stamp">'+escapeHTML(msgStamp(t))+'</div>'; lastDay = day; }
       var cls = m.from==='me' ? 'bubble-mine' : 'bubble-theirs';
-      return '<div class="msg-row '+cls+'"><div class="msg-bubble">'+escapeHTML(m.text)+'</div></div>';
-    }).join('');
+      out += '<div class="msg-row '+cls+'"><div class="msg-bubble">'+escapeHTML(m.text)+'</div></div>';
+      if(i === msgs.length-1 && m.from==='me') out += '<div class="msg-seen">Sent</div>';
+    });
+    return out;
   }
   function renderThread(params){
     var sid = params && params.id;
@@ -2909,17 +3039,20 @@
       return;
     }
     el.innerHTML =
-      '<div class="topbar thread-topbar">'+
-        '<button class="circle-btn" onclick="back()">'+ICONS.back+'</button>'+
-        '<div class="thread-head" onclick="go(\'student\',{id:\''+sid+'\'})">'+avatarHTML(sid,32)+
-          '<div class="thread-name-row"><span class="thread-name">'+escapeHTML(s.name)+'</span>'+verifiedBadge()+'</div>'+
+      '<div class="thread-top">'+
+        '<button class="thread-back" onclick="back()">'+ICONS.back+'</button>'+
+        '<div class="thread-who" onclick="go(\'student\',{id:\''+sid+'\'})">'+avatarHTML(sid,54)+
+          '<span class="thread-pill">'+escapeHTML(s.name)+ICONS.chevron+'</span>'+
         '</div>'+
       '</div>'+
-      '<div class="thread-context">'+escapeHTML(c.contextLine)+'</div>'+
+      (c.contextLine ? '<div class="thread-context">'+escapeHTML(c.contextLine)+'</div>' : '')+
       '<div class="thread-msgs" id="threadMsgs">'+threadBubblesHTML(sid)+'</div>'+
       '<div class="composer">'+
-        '<input class="input composer-input" id="composerInput" placeholder="Message" oninput="onComposerInput()" onkeydown="onComposerKey(event)" />'+
-        '<button class="send-btn" id="sendBtn" disabled onclick="sendMessage(\''+sid+'\')">'+ICONS.arrow+'</button>'+
+        '<div class="composer-tools">'+
+          '<button class="composer-tool" onclick="addThreadPhoto(\''+sid+'\')" title="Photo">'+ICONS.camera+'</button>'+
+        '</div>'+
+        '<input class="input composer-input" id="composerInput" placeholder="Message..." oninput="onComposerInput()" onkeydown="onComposerKey(event)" />'+
+        '<button class="send-btn" id="sendBtn" disabled onclick="sendMessage(\''+sid+'\')">'+ICONS.arrowUp+'</button>'+
       '</div>';
     var wrap = document.getElementById('threadMsgs');
     if(wrap) wrap.scrollTop = wrap.scrollHeight;
@@ -2941,6 +3074,15 @@
       if(current.params && current.params.id) sendMessage(current.params.id);
     }
   }
+  function addThreadPhoto(sid){
+    pickFromDevice(function(r){
+      if(r.state==='error'){ alert('Could not attach that photo: '+r.message); return; }
+      if(r.state!=='done' || !r.keys || !r.keys.length) return;
+      var input = document.getElementById('composerInput');
+      if(input){ input.value = (input.value ? input.value+' ' : '') + 'Shared a photo'; onComposerInput(); }
+    });
+  }
+  window.addThreadPhoto = addThreadPhoto;
   window.onComposerInput = onComposerInput; window.onComposerKey = onComposerKey;
   function sendMessage(sid){
     var input = document.getElementById('composerInput');
@@ -3055,7 +3197,7 @@
   }
   function hostCoverHTML(cityLabel){
     if(sheetSel.coverBusy){
-      return '<div class="cover-slot empty"><span class="spinner" style="border-color:rgba(21,23,27,.25);border-top-color:#15171B;"></span></div>';
+      return '<div class="cover-slot empty"><span class="spinner" style="border-color:var(--spin);border-top-color:var(--ink);"></span></div>';
     }
     if(sheetSel.coverKey){
       return '<div class="cover-slot filled" style="'+bgStyle(sheetSel.coverKey,null)+'"></div>'+
@@ -3135,7 +3277,7 @@
     var thumbs = postSel.photoKeys.map(function(key){
       return '<div class="roll-thumb" style="'+bgStyle(key,null)+'" onclick="removePostPhoto(\''+key+'\')"></div>';
     }).join('');
-    if(postSel.photoBusy) thumbs += '<div class="roll-thumb" style="display:flex;align-items:center;justify-content:center;"><span class="spinner" style="border-color:rgba(21,23,27,.25);border-top-color:#15171B;"></span></div>';
+    if(postSel.photoBusy) thumbs += '<div class="roll-thumb" style="display:flex;align-items:center;justify-content:center;"><span class="spinner" style="border-color:var(--spin);border-top-color:var(--ink);"></span></div>';
     else if(postSel.photoKeys.length < 3) thumbs += '<div class="roll-thumb roll-add" onclick="addPostPhotos()">'+ICONS.camera+'</div>';
     var canPublish = !!(postSel.citySlug && postSel.title.trim() && postSel.body.trim());
     return '<div class="sheet-head"><div class="sheet-title fr">Post a trip report</div><button class="sheet-close" onclick="closeSheet()">'+ICONS.close+'</button></div>'+
