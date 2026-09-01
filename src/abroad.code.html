@@ -241,6 +241,16 @@
   .chip-scroll{display:flex;gap:9px;overflow-x:auto;padding:0 20px 4px;scrollbar-width:none;}
   .chip-scroll::-webkit-scrollbar{display:none;}
   .chip-scroll .chip{white-space:nowrap;flex:none;}
+  .place-list{display:flex;flex-direction:column;margin-top:6px;}
+  .place{display:flex;align-items:center;gap:12px;padding:13px 20px;text-decoration:none;color:inherit;
+    border-bottom:1px solid var(--line-soft);cursor:pointer;}
+  .place:last-child{border-bottom:none;}
+  .place-body{flex:1;min-width:0;}
+  .place-name{font-size:15.5px;font-weight:600;letter-spacing:-.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .place-kind{font-size:13.5px;color:var(--muted);margin-top:1px;}
+  .place-go{width:32px;height:32px;border-radius:50%;background:var(--tint);color:var(--muted);
+    display:flex;align-items:center;justify-content:center;flex:none;}
+  .place-go svg{width:16px;height:16px;}
   .city-rail{display:flex;gap:12px;overflow-x:auto;padding:0 20px 4px;scrollbar-width:none;}
   .city-rail::-webkit-scrollbar{display:none;}
   .city-card{position:relative;flex:none;width:210px;height:150px;border-radius:14px;overflow:hidden;
@@ -916,6 +926,7 @@
   var PROFILES = {};
   var CURRENT_PROFILE = null;
   var PROGRAM_CITIES = ['Madrid','Barcelona','Florence','Copenhagen','Paris','Prague','Dublin'];
+  var LEVEL_OPTIONS = ['Undergrad','Grad'];
   var TERM_OPTIONS = ["Fall '26","Spring '27"];
 
   function D(n, entries){ return {day:n, entries:entries}; }
@@ -1462,6 +1473,7 @@
       school: row.school || '',
       city: row.city || '',
       term: row.term || '',
+      level: row.level || '',
       major: row.major || '',
       quote: row.quote || '',
       interests: Array.isArray(row.interests) ? row.interests : [],
@@ -1950,6 +1962,10 @@
       '<div style="margin-top:12px;"><input class="input" id="schoolInput" value="'+escapeAttr(PROFILE.school)+'" oninput="onSchoolInput(this.value)" placeholder="School" /></div>'+
       '<div class="eyebrow" style="margin-top:22px;margin-bottom:8px;">City you\u2019re abroad in</div>'+onboardCitySectionHTML()+
       '<div class="eyebrow" style="margin-top:18px;margin-bottom:8px;">Term</div><div class="chip-row">'+termChips+'</div>'+
+      '<div class="eyebrow" style="margin-top:18px;margin-bottom:8px;">You are</div><div class="chip-row">'+
+        LEVEL_OPTIONS.map(function(l){
+          return '<span class="chip'+(PROFILE.level===l?' active':'')+'" onclick="setOnboardLevel(\''+l+'\')">'+l+'</span>';
+        }).join('')+'</div>'+
     '</div>';
   }
   function renderOnboardStep3(){
@@ -2006,6 +2022,8 @@
   function onFirstNameInput(v){ PROFILE.firstName = v; refreshOnboardContinue(); }
   function setOnboardCity(c){ PROFILE.city = c; renderOnboard(); }
   function setOnboardTerm(t){ PROFILE.term = t; renderOnboard(); }
+  function setOnboardLevel(l){ PROFILE.level = l; renderOnboard(); }
+  window.setOnboardLevel = setOnboardLevel;
   function onSchoolInput(v){ PROFILE.school = v; refreshOnboardContinue(); }
   function toggleOnboardInterest(key){
     var idx = PROFILE.interests.indexOf(key);
@@ -2051,6 +2069,7 @@
     PROFILE.school = p.school || '';
     PROFILE.city = p.city || '';
     PROFILE.term = p.term || PROFILE.term;
+    PROFILE.level = p.level || '';
     PROFILE.quote = p.quote || '';
     PROFILE.interests = (p.interests||[]).slice();
     PROFILE.bucket = (p.bucket||[]).slice();
@@ -2068,6 +2087,7 @@
       school: PROFILE.school,
       city: PROFILE.city,
       term: PROFILE.term,
+      level: PROFILE.level,
       interests: PROFILE.interests,
       bucket_list: PROFILE.bucket,
       photos: PROFILE.photos.filter(Boolean),
@@ -2346,6 +2366,58 @@
   window.setExploreRegion = setExploreRegion;
   window.onExploreSearch = onExploreSearch;
 
+  /* ---------------- what to do in a city ----------------
+     Every place here comes from OpenStreetMap: a real, named, mapped location.
+     Nothing is written by us. src/fetch_places.py builds places.json. */
+  var PLACES = (typeof window!=='undefined' && window.PLACES) || {};
+  var PLACE_CATS = [
+    {k:'sights',    label:'Sights',    head:'Best things to see'},
+    {k:'nightlife', label:'Nightlife', head:'Where students go out'},
+    {k:'food',      label:'Food',      head:'Food and markets'},
+    {k:'museums',   label:'Museums',   head:'Museums and galleries'},
+    {k:'outdoors',  label:'Outdoors',  head:'Beaches, parks and views'}
+  ];
+  var placeCat = {};
+  var KIND_LABEL = {
+    attraction:'Landmark', viewpoint:'Viewpoint', museum:'Museum', gallery:'Gallery',
+    nightclub:'Club', bar:'Bar', pub:'Pub', cafe:'Cafe', restaurant:'Restaurant',
+    marketplace:'Market', beach:'Beach', park:'Park', peak:'Peak',
+    castle:'Castle', monument:'Monument', memorial:'Memorial'
+  };
+  function mapsURL(pl){
+    return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(pl.lat+','+pl.lon);
+  }
+  function thingsToDoHTML(slug, cityLabel){
+    var data = PLACES[slug];
+    if(!data) return '';
+    var avail = PLACE_CATS.filter(function(c){ return (data[c.k]||[]).length; });
+    if(!avail.length) return '';
+    var cur = placeCat[slug];
+    if(!cur || !data[cur]) cur = avail[0].k;
+    var chips = avail.map(function(c){
+      return '<span class="chip'+(c.k===cur?' active':'')+'" onclick="setPlaceCat(\''+slug+'\',\''+c.k+'\')">'+c.label+'</span>';
+    }).join('');
+    var head = (avail.filter(function(c){ return c.k===cur; })[0]||avail[0]).head;
+    var rows = data[cur].map(function(pl){
+      return '<a class="place" href="'+mapsURL(pl)+'" target="_blank" rel="noopener">'+
+        '<div class="place-body"><div class="place-name">'+escapeHTML(pl.n)+'</div>'+
+        '<div class="place-kind">'+escapeHTML(KIND_LABEL[pl.k] || 'Place')+'</div></div>'+
+        '<span class="place-go">'+ICONS.pin+'</span></a>';
+    }).join('');
+    return '<div class="section"><div class="section-head">'+
+        '<div class="section-title">What to do in '+escapeHTML(cityLabel)+'</div></div>'+
+      '<div class="chip-scroll">'+chips+'</div>'+
+      '<div class="hpad" style="margin-top:14px;"><div class="eyebrow">'+head+'</div></div>'+
+      '<div class="place-list">'+rows+'</div>'+
+      '<div class="hpad"><div class="helper">Tap any of these to open it in maps.</div></div>'+
+    '</div>';
+  }
+  function setPlaceCat(slug, cat){
+    placeCat[slug] = cat;
+    if(current.screen==='destination') renderDestination(current.params);
+  }
+  window.setPlaceCat = setPlaceCat;
+
   /* ---------------- City page ---------------- */
   function renderDestination(slug){
     var city = findCity(slug);
@@ -2384,30 +2456,7 @@
       '</div>';
     }
 
-    var starterGuide = '';
-    if(dest){
-      var vibeChips = dest.vibeTags.map(function(v){ return '<span class="chip">'+v+'</span>'; }).join('');
-      var itinHTML = dest.itinerary.map(function(day){
-        var entries = day.entries.map(function(e){
-          return '<div class="itin-entry"><div class="itin-time eyebrow">'+e.t+'</div><div><div class="itin-place">'+e.place+'</div><div class="itin-note">'+e.note+'</div></div></div>';
-        }).join('');
-        return '<div class="section" style="margin-top:18px;"><div class="itin-day-label eyebrow">'+dayLabel(day.day)+'</div>'+entries+'</div>';
-      }).join('');
-      var staysHTML = dest.stays.map(function(s){
-        return '<div class="stay-item"><div class="stay-name">'+s.name+'</div><div class="stay-take">'+s.take+'</div><div class="stay-price">'+s.price+'</div></div>';
-      }).join('');
-      starterGuide =
-        '<div class="section"><div class="section-head"><div class="section-title">Starter guide</div><div class="section-sub">A quick head start for '+escapeHTML(name)+'</div></div>'+
-          '<div class="hpad">'+
-            '<div class="detail-tag fr-i">'+dest.tagline+'</div>'+
-            '<div class="detail-meta">'+dest.flight+'</div>'+
-            '<div class="chip-row" style="margin-top:14px;">'+vibeChips+'</div>'+
-            '<div class="why-text" style="margin-top:14px;">'+dest.why+'</div>'+
-          '</div>'+
-        '</div>'+
-        '<div class="hpad" style="margin-top:8px;">'+itinHTML+'</div>'+
-        '<div class="hpad section"><div class="section-title">Where students stay</div>'+staysHTML+'</div>';
-    }
+    var thingsToDo = thingsToDoHTML(slug, name);
 
     el.innerHTML =
       '<div class="hero" style="'+cityStyle(slug)+'"><div class="hero-scrim"></div>'+
@@ -2419,8 +2468,8 @@
       '</div>'+
       (stats ? '<div class="hpad" style="margin-top:16px;"><div class="detail-meta">'+stats+'</div></div>' : '')+
       '<div class="section" style="margin-top:'+(stats?'10px':'22px')+';"><div class="section-head"><div class="section-title">Students going</div></div>'+goingBlock+'</div>'+
-      '<div class="section"><div class="section-head"><div class="section-title">From students</div></div>'+postsBlock+'</div>'+
-      starterGuide;
+      thingsToDo+
+      '<div class="section"><div class="section-head"><div class="section-title">From students</div></div>'+postsBlock+'</div>';
   }
   function toggleSave(slug){ saved[slug] = !saved[slug]; persist(); renderDestination(slug); }
   window.toggleSave = toggleSave;
@@ -2840,7 +2889,7 @@
     }
 
     var stats = profileStats(AUTH_UID);
-    var subline = [s.school, s.city ? s.city+' program' : '', s.term].filter(Boolean).join(' · ');
+    var subline = [s.school, s.level, s.city ? s.city+' program' : '', s.term].filter(Boolean).join(' · ');
 
     el.innerHTML =
       '<div class="me-title-row"><h2 class="screen-title fr">Me</h2><button class="edit-btn" onclick="go(\'edit\')">'+ICONS.edit+'</button></div>'+
@@ -2884,6 +2933,10 @@
         '<input class="input" id="editSchool" value="'+escapeAttr(PROFILE.school)+'" oninput="onEditSchool(this.value)" />'+
         '<div class="eyebrow" style="margin-top:18px;margin-bottom:8px;">City</div><div class="chip-row">'+cityChips+'</div>'+
         '<div class="eyebrow" style="margin-top:18px;margin-bottom:8px;">Term</div><div class="chip-row">'+termChips+'</div>'+
+        '<div class="eyebrow" style="margin-top:18px;margin-bottom:8px;">You are</div><div class="chip-row">'+
+          LEVEL_OPTIONS.map(function(l){
+            return '<span class="chip'+(PROFILE.level===l?' active':'')+'" onclick="setEditLevel(\''+l+'\')">'+l+'</span>';
+          }).join('')+'</div>'+
         '<div class="eyebrow" style="margin-top:18px;margin-bottom:8px;">Appearance</div><div class="chip-row">'+
           ['system','light','dark'].map(function(t){
             var label = t==='system' ? 'System' : (t==='light' ? 'Light' : 'Dark');
@@ -2902,12 +2955,14 @@
   function onEditQuote(v){ PROFILE.quote = v; }
   function setEditCity(c){ PROFILE.city = c; renderEdit(); }
   function setEditTerm(t){ PROFILE.term = t; renderEdit(); }
+  function setEditLevel(l){ PROFILE.level = l; renderEdit(); }
+  window.setEditLevel = setEditLevel;
   function saveEdit(){
     if(!AUTH_UID) return;
     var btn = document.getElementById('editSaveBtn');
     if(btn){ btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Saving...'; }
     DB.update('abroad_profiles', {
-      first_name: PROFILE.firstName, school: PROFILE.school, city: PROFILE.city, term: PROFILE.term,
+      first_name: PROFILE.firstName, school: PROFILE.school, city: PROFILE.city, term: PROFILE.term, level: PROFILE.level,
       quote: PROFILE.quote, photos: PROFILE.photos.filter(Boolean)
     }, 'id=eq.'+AUTH_UID).then(function(rows){
       var row = rows && rows[0];
